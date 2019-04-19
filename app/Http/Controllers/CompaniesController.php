@@ -21,7 +21,7 @@ class CompaniesController extends Controller
 
         auth()->user()->companies()->save($company);
 
-        return back();
+        return redirect()->route('tenants.switch', $company);
     }
 
 }

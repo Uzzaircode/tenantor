@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Company;
+use App\Events\Tenant\TenantIdentifiedEvent;
 
 class SetTenant
 {
@@ -28,6 +29,7 @@ class SetTenant
             return redirect('home');
         }
 
+        event(new TenantIdentifiedEvent($tenant));
         return $next($request);
     }
 

@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(optional(request()->tenant())->id);
         return view('home');
     }
 }

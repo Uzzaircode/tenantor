@@ -15,6 +15,9 @@ class SetTenant
      * @param  \Closure  $next
      * @return mixed
      */
+
+    protected $tenant;
+
     public function handle($request, Closure $next)
     {
         $tenant = $this->resolveTenant(session('tenant'));
@@ -25,11 +28,14 @@ class SetTenant
 
         }
 
-        if(!auth()->user()->companies()->contains('id', $tenant->id)){
+        if(!auth()->user()->companies->contains('id', $tenant->id)){
+            
             return redirect('home');
+
         }
 
         event(new TenantIdentifiedEvent($tenant));
+        
         return $next($request);
     }
 

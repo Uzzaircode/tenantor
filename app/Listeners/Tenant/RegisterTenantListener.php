@@ -2,30 +2,22 @@
 
 namespace App\Listeners\Tenant;
 
-use App\Events\Tenant\TenantIdentified;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\Tenant\TenantIdentifiedEvent;
+use App\Tenants\Manager;
 
 class RegisterTenantListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
+    
     /**
      * Handle the event.
      *
-     * @param  TenantIdentified  $event
+     * @param  TenantIdentifiedEvent  $event
      * @return void
      */
-    public function handle(TenantIdentified $event)
+    public function handle(TenantIdentifiedEvent $event)
     {
-        //
+        return app(Manager::class)->setTenant($event->tenant);
     }
 }

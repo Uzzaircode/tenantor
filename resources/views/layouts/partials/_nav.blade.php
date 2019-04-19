@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            {{ optional(request()->tenant())->name ?? config('app.name') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -18,17 +18,22 @@
                           Companies
                         </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @if($companies->count()) 
-                            @foreach($companies as $c)
-                            <a href="" class="dropdown-item">
-                                {{$c->name}}
+                        @if($companies->count()) @foreach($companies as $company)
+                        <a href="{{route('tenants.switch',$company)}}" class="dropdown-item">
+                                {{$company->name}}
                             </a> @endforeach
-                            <div class="dropdown-divider"></div>
-                            @endif
+                        <div class="dropdown-divider"></div>
+                        @endif
                         <a href="{{route('companies.create')}}" class="dropdown-item">New Company</a>
                     </div>
-                </li>                
+                </li>
                 @endif
+                
+                @tenant
+                <li class="nav-item">
+                    <a class="nav-link" href="">Staff</a>
+                </li>
+                @endtenant
             </ul>
 
             <!-- Right Side Of Navbar -->

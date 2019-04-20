@@ -25,7 +25,7 @@ trait isTenantTrait
     protected static function newDatabaseConnection(TenantInterface $tenant){
         
         return new TenantConnection([
-            'database' => 'fresh_'. $tenant->id,
+            'database' => 'tenant_'. $tenant->id,
         ]);
     }
 

@@ -29,11 +29,11 @@
                 </li>
                 @endif
                 
-                @tenant
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="">Staff</a>
+                <a class="nav-link" href="{{route('projects.index')}}">Staff</a>
                 </li>
-                @endtenant
+                
             </ul>
 
             <!-- Right Side Of Navbar -->

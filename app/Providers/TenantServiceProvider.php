@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Tenants\Manager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use App\Console\Commands\Tenant\TenantDatabaseMigratorCommand;
+use App\Tenants\Database\TenantDatabaseManager;
+
 
 class TenantServiceProvider extends ServiceProvider
 {
@@ -16,7 +19,12 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(TenantDatabaseMigratorCommand::class,function($app){
+            return new TenantDatabaseMigratorCommand(
+                $app->make('migrator'), 
+                $app->make(TenantDatabaseManager::class)
+        );
+        });
     }
 
     /**

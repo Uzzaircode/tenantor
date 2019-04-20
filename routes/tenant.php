@@ -2,8 +2,6 @@
 
 use App\Tenants\Manager;
 
-Route::get('test', function () {
+// Route::get('test', function () {});
 
-    dd(app(Manager::class)->getTenant());
-
-});
+Route::resource('projects', 'Tenants\ProjectsController');

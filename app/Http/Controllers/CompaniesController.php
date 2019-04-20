@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use App\Events\Tenant\TenantCreatedEvent;
 
 class CompaniesController extends Controller
 {
@@ -21,6 +22,8 @@ class CompaniesController extends Controller
 
         auth()->user()->companies()->save($company);
 
+        event(new TenantCreatedEvent($company));
+        
         return redirect()->route('tenants.switch', $company);
     }
 

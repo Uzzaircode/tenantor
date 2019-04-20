@@ -5,11 +5,13 @@ namespace App\Console\Commands\Tenant;
 use Illuminate\Console\Command;
 use Illuminate\Database\Console\Migrations\MigrateCommand;
 use Illuminate\Database\Migrations\Migrator;
-use App\Company;
 use App\Tenants\Database\TenantDatabaseManager;
+use App\Tenants\Traits\Console\FetchTenantsTrait;
+use App\Tenants\Traits\Console\AcceptsMultipleTenantsTrait;
 
 class TenantDatabaseMigratorCommand extends MigrateCommand
 {
+    use FetchTenantsTrait,AcceptsMultipleTenantsTrait;
 
     protected $migrator;
     protected $tenantDatabaseManager;
@@ -34,6 +36,8 @@ class TenantDatabaseMigratorCommand extends MigrateCommand
         $this->setName('tenant:migrate');
         
         $this->tenantDatabaseManager = $tenantDatabaseManager;
+
+        $this->specifyParameters();
     }
 
     /**
@@ -49,9 +53,8 @@ class TenantDatabaseMigratorCommand extends MigrateCommand
 
         $this->input->setOption('database', 'tenant');
 
-        $tenants = Company::get();
-
-        $tenants->each(function($tenant){
+       
+        $this->getTenantId($this->option('tenants'))->each(function($tenant){
             
             $this->tenantDatabaseManager->createConnection($tenant);
             $this->tenantDatabaseManager->connectToTenant();
@@ -59,7 +62,6 @@ class TenantDatabaseMigratorCommand extends MigrateCommand
             $this->tenantDatabaseManager->purgeTenantConnection();
 
         });      
-
         
     }
 

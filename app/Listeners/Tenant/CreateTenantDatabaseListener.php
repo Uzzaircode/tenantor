@@ -6,6 +6,7 @@ use App\Events\Tenant\TenantCreatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Tenants\Database\TenantDatabaseGenerator;
+use App\Events\Tenant\TenantDatabaseCreatedEvent;
 
 class CreateTenantDatabaseListener
 {
@@ -34,5 +35,7 @@ class CreateTenantDatabaseListener
             throw new \Exception('Tenant DB can\'t be generated');
 
         }
+
+        event(new TenantDatabaseCreatedEvent($event->tenant));
     }
 }

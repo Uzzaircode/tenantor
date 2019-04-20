@@ -17,6 +17,7 @@ class TenantServiceProvider extends ServiceProvider
      *
      * @return void
      */
+     
     public function register()
     {
         $this->app->singleton(TenantDatabaseMigratorCommand::class,function($app){
@@ -32,6 +33,7 @@ class TenantServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    
     public function boot()
     {
         $this->app->singleton(Manager::class, function(){

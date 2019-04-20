@@ -25,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\Tenant\TenantIdentifiedEvent' => [
             'App\Listeners\Tenant\RegisterTenantListener' 
+        ],
+
+        'App\Events\Tenant\TenantDatabaseCreatedEvent' => [
+            'App\Listeners\Tenant\SetupTenantDatabaseListener' 
         ]
     ];
 

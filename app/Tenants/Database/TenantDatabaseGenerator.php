@@ -9,11 +9,7 @@ class TenantDatabaseGenerator{
 
     public function create(TenantInterface $tenant){
 
-        return DB::statement("
-        
-            CREATE DATABASE tenant_{$tenant->id}
-
-        ");
+        return DB::statement("CREATE DATABASE tenant_{$tenant->id}");
 
     }
 }

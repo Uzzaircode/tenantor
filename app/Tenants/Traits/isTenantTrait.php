@@ -5,6 +5,7 @@ namespace App\Tenants\Traits;
 use App\TenantConnection;
 use App\Tenants\Entities\TenantInterface;
 use Illuminate\Support\Str;
+use App\TenantUser;
 
 trait isTenantTrait
 {
@@ -24,13 +25,13 @@ trait isTenantTrait
 
     protected static function newDatabaseConnection(TenantInterface $tenant){
         
-        return new TenantConnection([
+        return new TenantUser([
             'database' => 'tenant_'. $tenant->id,
         ]);
     }
 
     public function tenantConnection()
     {
-        return $this->hasOne(TenantConnection::class, 'company_id', 'id');
+        return $this->hasOne(TenantUser::class, 'user_id', 'id');
     }
 }

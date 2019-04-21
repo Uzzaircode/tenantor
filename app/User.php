@@ -5,10 +5,12 @@ namespace App;
 use App\Company;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Tenants\Entities\TenantInterface;
+use App\Tenants\Traits\isTenantTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements TenantInterface
 {
-    use Notifiable;
+    use isTenantTrait, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email','uuid', 'password',
     ];
 
     /**

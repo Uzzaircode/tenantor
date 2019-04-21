@@ -1,15 +1,16 @@
 <?php
 
+
 namespace App\Console\Commands\Tenant;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\Console\Migrations\MigrateCommand;
+use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Database\Migrations\Migrator;
 use App\Tenants\Database\TenantDatabaseManager;
 use App\Tenants\Traits\Console\FetchTenantsTrait;
 use App\Tenants\Traits\Console\AcceptsMultipleTenantsTrait;
 
-class TenantDatabaseMigratorCommand extends MigrateCommand
+class TenantDatabaseMigrationRollback extends RollbackCommand
 {
     use FetchTenantsTrait,AcceptsMultipleTenantsTrait;
 
@@ -21,7 +22,7 @@ class TenantDatabaseMigratorCommand extends MigrateCommand
      *
      * @var string
      */
-    protected $description = 'run tenants migrations ';
+    protected $description = 'Rollback tenants migrations ';
 
     /**
      * Create a new command instance.
@@ -33,7 +34,7 @@ class TenantDatabaseMigratorCommand extends MigrateCommand
         
         parent::__construct($migrator);
         
-        $this->setName('tenant:migrate');
+        $this->setName('tenant:migrate-rollback');
         
         $this->tenantDatabaseManager = $tenantDatabaseManager;
 

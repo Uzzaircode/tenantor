@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use App\Console\Commands\Tenant\TenantDatabaseMigratorCommand;
 use App\Tenants\Database\TenantDatabaseManager;
-
+use App\Console\Commands\Tenant\TenantDatabaseMigrationRollback;
 
 class TenantServiceProvider extends ServiceProvider
 {
@@ -22,6 +22,13 @@ class TenantServiceProvider extends ServiceProvider
     {
         $this->app->singleton(TenantDatabaseMigratorCommand::class,function($app){
             return new TenantDatabaseMigratorCommand(
+                $app->make('migrator'), 
+                $app->make(TenantDatabaseManager::class)
+        );
+        });
+
+        $this->app->singleton(TenantDatabaseMigrationRollback::class,function($app){
+            return new TenantDatabaseMigrationRollback(
                 $app->make('migrator'), 
                 $app->make(TenantDatabaseManager::class)
         );
